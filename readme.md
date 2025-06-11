@@ -1,10 +1,6 @@
-[AI能力层级：模型能力与工具能力区分指南](https://gilded-lamington-a874ad.netlify.app/)
-
 # SIA Course Resource
 
 本仓库包含SIA课程的相关资源和文档。
-
-## 内容概览
 
 ### AI能力层级：模型能力与工具能力区分指南
 
