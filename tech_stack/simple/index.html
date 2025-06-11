@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国内大模型开发技术栈</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            padding: 5px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e3f2fd;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(33, 150, 243, 0.08);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2196f3 0%, #21cbf3 100%);
+            color: white;
+            padding: 15px 12px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.0em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .intro {
+            font-size: 1.1em;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 18px;
+        }
+
+        .tech-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .tech-section {
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+        }
+
+        .section-title {
+            background: #1976d2;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1.0em;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .tool-card {
+            background: #fafafa;
+            border: 1px solid #e1f5fe;
+            border-radius: 4px;
+            padding: 12px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .tool-card:hover {
+            border-color: #2196f3;
+            background: #e3f2fd;
+            transform: translateY(-2px);
+        }
+
+        .tool-icon {
+            width: 65px;
+            height: 50px;
+            margin: 0 auto 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid #e1f5fe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tool-icon img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        /* 包含文字的图标 - 隐藏文字标签并放大 */
+        .tool-card.text-icon .tool-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 8px;
+        }
+
+        .tool-card.text-icon .tool-name {
+            display: none;
+        }
+
+        .tool-card.text-icon .tool-link {
+            margin-top: 8px;
+        }
+
+        /* 特定图标的个性化尺寸配置 */
+        .icon-textin .tool-icon {
+            width: 180px;
+            height: 90px;
+            background-color: #000E21;
+        }
+
+        .icon-document-mind .tool-icon {
+            width: 55px;
+            height: 65px;
+        }
+
+        .icon-mineru .tool-icon {
+            width: 180px;
+            height: 95px;
+            background-color: #FFFFFF;
+        }
+
+        .icon-firecrawl .tool-icon {
+            width: 210px;
+            height: 95px;
+            background-color: #FFFFFF;
+        }
+
+        .icon-scrapy .tool-icon {
+            width: 260px;
+            height: 95px;
+            background-color: #FFFFFF;
+        }
+
+        .icon-qwen-embedding .tool-icon {
+            width: 185px;
+            height: 80px;
+            background-color: #FFFFFF;
+        }
+
+        .icon-jina-ai .tool-icon {
+            width: 80px;
+            height: 80px;
+        }
+
+        .icon-langchain .tool-icon {
+            width: 135px;
+            height: 85px;
+        }
+
+        .icon-qwen-agent .tool-icon {
+            width: 135px;
+            height: 85px;
+        }
+
+        .icon-unsloth .tool-icon {
+            width: 135px;
+            height: 85px;
+            background-color: #FFFFFF;
+        }
+
+        .icon-llama-factory .tool-icon {
+            width: 65px;
+            height: 60px;
+        }
+
+        .icon-coze .tool-icon {
+            width: 85px;
+            height:85px;
+            background-color: #4D53E9;
+        }
+
+        .icon-dify .tool-icon {
+            width: 115px;
+            height:85px;
+            background-color: #F5F5F5;
+            
+        }
+
+        .icon-zhipu .tool-icon {
+            width: 135px;
+            height:85px;
+        }
+
+        .icon-bailian .tool-icon {
+            width: 155px;
+            height: 85px;
+            background-color: #F9FAFD;
+        }
+
+        .icon-siliconflow .tool-icon {
+            width: 155px;
+            height: 85px;
+            background-color: #C7CBF7;
+        }
+
+        .icon-deepseek .tool-icon {
+            width: 155px;
+            height: 85px;
+            background-color: #FAFCFE;
+        }
+
+        .icon-qwen .tool-icon {
+            width: 80px;
+            height: 85px;
+        }
+
+        .tool-name {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .tool-link {
+            color: #1565c0;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .tool-link:hover {
+            text-decoration: underline;
+        }
+
+        .cc {
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 16px solid #2196f3;
+            margin: 5px auto;
+            opacity: 0.6;
+        }
+
+        .subsection {
+            margin-bottom: 12px;
+        }
+
+        .subsection-title {
+            background: #e3f2fd;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #1565c0;
+            margin-bottom: 8px;
+            border-left: 3px solid #2196f3;
+            font-size: 0.9em;
+        }
+
+
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .tools-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>大模型项目开发技术栈推荐</h1>
+            <div class="intro">
+                <p>本页面精选了大模型项目开发中的常用技术栈工具与资源，内容涵盖AI项目全生命周期的各环节技术需求。</p>
+                <p>所推荐框架与服务特别针对国内开发环境进行了本土化适配，为您提供更符合实际应用场景的解决方案。</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="tech-flow">
+                <!-- 数据获取 -->
+                <div class="tech-section">
+                    <div class="section-title">数据获取：构建大模型应用的数据基石</div>
+                    
+                    <div class="subsection">
+                        <div class="subsection-title">文档解析：从非结构化文本中提取价值</div>
+                        <div class="tools-grid">
+                            <!-- <div class="tool-card text-icon icon-textin"> -->
+                                <div class="tool-card icon-textin">
+                                <div class="tool-icon">
+                                    <img src="./img/textin.png" alt="Textin">
+                                </div>
+                                <a href="https://www.textin.com/market/detail/pdf_to_markdown" class="tool-link">Textin通用文档解析</a>
+                            </div>
+                            <div class="tool-card icon-document-mind">
+                                <div class="tool-icon">
+                                    <img src="./img/document_mind_aliyun.png" alt="DocumentMind">
+                                </div>
+                                <div class="tool-name">DocumentMind</div>
+                                <a href="https://docmind.console.aliyun.com/" class="tool-link">阿里云文档解析</a>
+                            </div>
+                            <div class="tool-card icon-mineru">
+                                <div class="tool-icon">
+                                    <img src="./img/minerU.png" alt="MinerU">
+                                </div>
+                                <!-- <div class="tool-name">MinerU</div> -->
+                                <a href="https://github.com/opendatalab/MinerU" class="tool-link">MinerU开源文档解析</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <div class="subsection-title">网页抓取：从互联网获取动态数据</div>
+                        <div class="tools-grid">
+                            <div class="tool-card icon-firecrawl">
+                                <div class="tool-icon">
+                                    <img src="./img/firecrawl.png" alt="Firecrawl">
+                                </div>
+                                <!-- <div class="tool-name">Firecrawl</div> -->
+                                <a href="https://github.com/mendableai/firecrawl" class="tool-link">智能网页抓取</a>
+                            </div>
+                            <div class="tool-card icon-scrapy">
+                                <div class="tool-icon">
+                                    <img src="./img/scrapy.png" alt="Scrapy">
+                                </div>
+                                <!-- <div class="tool-name">Scrapy</div> -->
+                                <a href="https://github.com/scrapy/scrapy" class="tool-link">Python爬虫框架</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 向量化与重排 -->
+                <div class="tech-section">
+                    <div class="section-title">向量化与重排：提升模型理解与检索效率</div>
+                    <div class="tools-grid">
+                        <div class="tool-card icon-qwen-embedding">
+                            <div class="tool-icon">
+                                <img src="./img/qwen3embedding.png" alt="QwenEmbedding">
+                            </div>
+                            <!-- <div class="tool-name">QwenEmbedding</div> -->
+                            <a href="https://github.com/QwenLM/Qwen3-Embedding" class="tool-link">千问向量模型</a>
+                        </div>
+                        <div class="tool-card icon-jina-ai">
+                            <div class="tool-icon">
+                                <img src="./img/jina_ai.png" alt="JinaAI">
+                            </div>
+                            <a href="https://jina.ai/" class="tool-link">JinaAI多模态向量服务</a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 开发框架 -->
+                <div class="tech-section">
+                    <div class="section-title">开发框架：加速大模型应用构建</div>
+                    <div class="tools-grid">
+                        <div class="tool-card icon-langchain">
+                            <div class="tool-icon">
+                                <img src="./img/langchain.png" alt="LangChain">
+                            </div>
+                            <a href="https://www.langchain.com/" class="tool-link">LangChain系列AI应用框架</a>
+                        </div>
+                        <div class="tool-card icon-qwen-agent">
+                            <div class="tool-icon">
+                                <img src="./img/qwen-agent.png" alt="Qwen-Agent">
+                            </div>
+                            <a href="https://github.com/QwenLM/Qwen-Agent" class="tool-link">千问智能体框架</a>
+                        </div>
+                        <div class="tool-card icon-unsloth">
+                            <div class="tool-icon">
+                                <img src="./img/unsloth.png" alt="Unsloth">
+                            </div>
+                            <a href="https://github.com/unslothai/unsloth" class="tool-link">Unsloth高效模型微调</a>
+                        </div>
+                        <div class="tool-card icon-llama-factory">
+                            <div class="tool-icon">
+                                <img src="./img/LLama-factory.png" alt="LLaMA-Factory">
+                            </div>
+                            <div class="tool-name">LLaMA-Factory</div>
+                            <a href="https://github.com/hiyouga/LLaMA-Factory" class="tool-link">模型训练工厂</a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 智能体与工作流 -->
+                <div class="tech-section">
+                    <div class="section-title">智能体与工作流平台：低代码构建AI应用</div>
+                    <div class="tools-grid">
+                        <div class="tool-card icon-coze">
+                            <div class="tool-icon">
+                                <img src="./img/coze.jpg" alt="Coze">
+                            </div>
+                            <a href="https://www.coze.cn/" class="tool-link">扣子工作流</a>
+                        </div>
+                        <div class="tool-card icon-dify">
+                            <div class="tool-icon">
+                                <img src="./img/dify.png" alt="Dify">
+                            </div>
+                            <a href="https://github.com/langgenius/dify" class="tool-link">Dify工作流</a>
+                        </div>
+                        <div class="tool-card icon-zhipu">
+                            <div class="tool-icon">
+                                <img src="./img/zhipuai.png" alt="智谱AI">
+                            </div>
+                            <a href="https://bigmodel.cn/agent" class="tool-link">智谱清流</a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 资源服务平台 -->
+                <div class="tech-section">
+                    <div class="section-title">模型服务资源平台</div>
+                    <div class="tools-grid">
+                        <div class="tool-card icon-bailian">
+                            <div class="tool-icon">
+                                <img src="./img/bailian.png" alt="百炼">
+                            </div>
+                            <a href="https://bailian.console.aliyun.com/" class="tool-link">阿里云百炼</a>
+                        </div>
+                        <div class="tool-card icon-siliconflow">
+                            <div class="tool-icon">
+                                <img src="./img/siliconflow.png" alt="硅基流动">
+                            </div>
+                            <a href="https://siliconflow.cn/" class="tool-link">硅基流动模型服务</a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 大模型 -->
+                <div class="tech-section">
+                    <div class="section-title">大模型：AI应用驱动的核心引擎</div>
+                    <div class="tools-grid">
+                        <div class="tool-card icon-deepseek">
+                            <div class="tool-icon">
+                                <img src="./img/deepseek.png" alt="DeepSeek">
+                            </div>
+
+                            <a href="https://www.deepseek.com/" class="tool-link">DeepSeek</a>
+                        </div>
+                        <div class="tool-card icon-qwen">
+                            <div class="tool-icon">
+                                <img src="./img/qwen.png" alt="千问">
+                            </div>
+                            <a href="https://github.com/QwenLM" class="tool-link">千问系列大模型家族</a>
+                        </div>
+                    </div>
+                </div>
+                                <!-- 结语 -->
+                                <div class="tech-section">
+                                    <div class="section-title">持续探索与学习</div>
+                                    <div class="section-description">
+                                        <p>本页面所推荐的工具和平台仅代表各个技术领域中的一小部分优秀选择。AI技术生态系统正在快速发展，每天都有新的工具、框架和服务涌现。</p>
+                                        <p>我们鼓励您：</p>
+                                        <ul style="margin: 10px 0; padding-left: 20px;">
+                                            <li>积极探索和尝试更多的开源项目和商业服务</li>
+                                            <li>关注AI技术社区的最新动态和趋势</li>
+                                            <li>参与开源项目的贡献和讨论</li>
+                                            <li>根据具体项目需求选择最适合的技术栈组合</li>
+                                        </ul>
+                                        <p>保持学习的热情和开放的心态，是在快速变化的AI领域中保持竞争力的关键。</p>
+                                    </div>
+                                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

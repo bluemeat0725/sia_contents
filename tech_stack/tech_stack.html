@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国内大模型开发技术栈</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            padding: 5px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e3f2fd;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(33, 150, 243, 0.08);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2196f3 0%, #21cbf3 100%);
+            color: white;
+            padding: 15px 12px;
+            text-align: center;
+            position: relative;
+        }
+
+        .language-toggle {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 8px 16px;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .language-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .header h1 {
+            font-size: 2.0em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .intro {
+            font-size: 1.1em;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 18px;
+        }
+
+        .tech-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .tech-section {
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+        }
+
+        .section-title {
+            background: #1976d2;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 1.0em;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .tool-card {
+            background: #fafafa;
+            border: 1px solid #e1f5fe;
+            border-radius: 4px;
+            padding: 12px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .tool-card:hover {
+            border-color: #2196f3;
+            background: #e3f2fd;
+            transform: translateY(-2px);
+        }
+
+        .tool-icon {
+            width: 65px;
+            height: 50px;
+            margin: 0 auto 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid #e1f5fe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tool-icon img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        /* 包含文字的图标 - 隐藏文字标签并放大 */
+        .tool-card.text-icon .tool-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 8px;
+        }
+
+        .tool-card.text-icon .tool-name {
+            display: none;
+        }
+
+        .tool-card.text-icon .tool-link {
+            margin-top: 8px;
+        }
+
+        /* 特定图标的个性化尺寸配置 */
+        .icon-textin .tool-icon {
+            width: 180px;
+            height: 90px;
+            background-color: #000E21;
+        }
+
+        .icon-document-mind .tool-icon {
+            width: 55px;
+            height: 65px;
+        }
+
+        .icon-mineru .tool-icon {
+            width: 180px;
+            height: 95px;
+            background-color: #FFFFFF;
+        }
+
+        .icon-firecrawl .tool-icon {
+            width: 210px;
+            height: 95px;
+            background-color: #FFFFFF;
+        }
+
+        .icon-scrapy .tool-icon {
+            width: 260px;
+            height: 95px;
+            background-color: #FFFFFF;
+        }
+
+        .icon-qwen-embedding .tool-icon {
+            width: 185px;
+            height: 80px;
+            background-color: #FFFFFF;
+        }
+
+        .icon-jina-ai .tool-icon {
+            width: 80px;
+            height: 80px;
+        }
+
+        .icon-langchain .tool-icon {
+            width: 135px;
+            height: 85px;
+            background-color: #FFFFFF;
+        }
+
+        .icon-qwen-agent .tool-icon {
+            width: 135px;
+            height: 85px;
+            background-color: #FFFFFF;
+        }
+
+        .icon-unsloth .tool-icon {
+            width: 135px;
+            height: 85px;
+            background-color: #FFFFFF;
+        }
+
+        .icon-llama-factory .tool-icon {
+            width: 65px;
+            height: 60px;
+        }
+
+        .icon-coze .tool-icon {
+            width: 85px;
+            height:85px;
+            background-color: #4D53E9;
+        }
+
+        .icon-dify .tool-icon {
+            width: 115px;
+            height:85px;
+            background-color: #F5F5F5;
+            
+        }
+
+        .icon-zhipu .tool-icon {
+            width: 135px;
+            height:85px;
+        }
+
+        .icon-bailian .tool-icon {
+            width: 155px;
+            height: 85px;
+            background-color: #F9FAFD;
+        }
+
+        .icon-siliconflow .tool-icon {
+            width: 155px;
+            height: 85px;
+            background-color: #C7CBF7;
+        }
+
+        .icon-deepseek .tool-icon {
+            width: 155px;
+            height: 85px;
+            background-color: #FAFCFE;
+        }
+
+        .icon-qwen .tool-icon {
+            width: 80px;
+            height: 85px;
+        }
+
+        .tool-name {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .tool-link {
+            color: #1565c0;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .tool-link:hover {
+            text-decoration: underline;
+        }
+
+        .cc {
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 16px solid #2196f3;
+            margin: 5px auto;
+            opacity: 0.6;
+        }
+
+        .subsection {
+            margin-bottom: 12px;
+        }
+
+        .subsection-title {
+            background: #e3f2fd;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #1565c0;
+            margin-bottom: 8px;
+            border-left: 3px solid #2196f3;
+            font-size: 0.9em;
+        }
+        
+        .section-description {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid #4a90e2;
+        }
+        
+        .subsection-description {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+            padding: 10px 14px;
+            background: #fafbfc;
+            border-radius: 4px;
+            border-left: 3px solid #7bb3f0;
+        }
+        
+        .tool-description {
+            color: #666;
+            font-size: 12px;
+            line-height: 1.4;
+            margin-top: 8px;
+            padding: 8px 0;
+            border-top: 1px solid #e9ecef;
+            text-align: left;
+        }
+        
+        .tool-description strong {
+            color: #4a90e2;
+            font-weight: 600;
+        }
+
+
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .tools-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="language-toggle" onclick="toggleLanguage()" id="langToggle">EN</div>
+            <h1 data-zh="大模型项目开发技术栈推荐" data-en="AI Development Tech Stack Recommendations">大模型项目开发技术栈推荐</h1>
+            <div class="intro">
+                <p data-zh="本页面精选了大模型项目开发中的常用技术栈工具与资源，内容涵盖AI项目全生命周期的各环节技术需求。" data-en="This page shows essential tech stack tools and resources for large model project development, covering technical requirements across the entire AI project lifecycle.">本页面精选了大模型项目开发中的常用技术栈工具与资源，内容涵盖AI项目全生命周期的各环节技术需求。</p>
+                <p data-zh="所推荐框架与服务特别针对国内开发环境进行了本土化适配，为您提供更符合实际应用场景的解决方案。" data-en="The recommended frameworks and services are specially adapted for domestic development environments, providing solutions that better fit real-world application scenarios.">所推荐框架与服务特别针对国内开发环境进行了本土化适配，为您提供更符合实际应用场景的解决方案。</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="tech-flow">
+                <!-- 数据获取 -->
+                <div class="tech-section">
+                    <div class="section-title" data-zh="数据获取：构建大模型应用的数据基石" data-en="Data Acquisition: Building the Data Foundation for AI Applications">数据获取：构建大模型应用的数据基石</div>
+                    
+                    <div class="subsection">
+                        <div class="subsection-title" data-zh="文档解析：从非结构化文本中提取价值" data-en="Document Parsing: Extracting Value from Unstructured Text">文档解析：从非结构化文本中提取价值</div>
+                        <div class="subsection-description" data-zh="文档解析工具能够将PDF、图片、扫描件等非结构化或半结构化文档转换为机器可读的格式（如Markdown、JSON），并提取其中的文本、表格、布局等信息，是构建知识库的重要环节。" data-en="Document parsing tools can convert unstructured or semi-structured documents like PDFs, images, and scanned files into machine-readable formats (such as Markdown, JSON), extracting text, tables, layout information, and serving as a crucial component in knowledge base construction.">
+                            文档解析工具能够将PDF、图片、扫描件等非结构化或半结构化文档转换为机器可读的格式（如Markdown、JSON），并提取其中的文本、表格、布局等信息，是构建知识库的重要环节。
+                        </div>
+                        <div class="tools-grid">
+                            <div class="tool-card icon-textin">
+                                <div class="tool-icon">
+                                    <img src="./img/textin.png" alt="Textin">
+                                </div>
+                                <a href="https://www.textin.com/market/detail/pdf_to_markdown" class="tool-link" data-zh="Textin通用文档解析" data-en="Textin Universal Document Parsing">Textin通用文档解析</a>
+                                <div class="tool-description" data-zh="AI赋能的智能文档识别与处理平台，支持多种格式文档的OCR识别、内容提取、格式转换、表格识别、公式识别等。<br><strong>应用场景：</strong>知识库构建、自动化办公、教育科研" data-en="AI-powered intelligent document recognition and processing platform, supporting OCR recognition, content extraction, format conversion, table recognition, formula recognition for various document formats.<br><strong>Use Cases:</strong> Knowledge base, office automation, education and research">
+                                    AI赋能的智能文档识别与处理平台，支持多种格式文档的OCR识别、内容提取、格式转换、表格识别、公式识别等。
+                                    <br><strong>应用场景：</strong>知识库构建、自动化办公、教育科研
+                                </div>
+                            </div>
+                            <div class="tool-card icon-document-mind">
+                                <div class="tool-icon">
+                                    <img src="./img/document_mind_aliyun.png" alt="DocumentMind">
+                                </div>
+                                <div class="tool-name">DocumentMind</div>
+                                <a href="https://docmind.console.aliyun.com/" class="tool-link" data-zh="阿里云文档解析" data-en="Alibaba Cloud Document Parsing">阿里云文档解析</a>
+                                <div class="tool-description" data-zh="基于达摩院技术的多模态文档识别与理解引擎，提供通用文档智能、行业文档智能和文档自学习能力。<br><strong>应用场景：</strong>企业文档管理、金融风控、政务服务" data-en="Multi-modal document recognition and understanding engine, providing general document intelligence, industry-specific document intelligence, and document self-learning capabilities.<br><strong>Use Cases:</strong> Enterprise document management, financial risk control, government services">
+                                    基于达摩院技术的多模态文档识别与理解引擎，提供通用文档智能、行业文档智能和文档自学习能力。
+                                    <br><strong>应用场景：</strong>企业文档管理、金融风控、政务服务
+                                </div>
+                            </div>
+                            <div class="tool-card icon-mineru">
+                                <div class="tool-icon">
+                                    <img src="./img/minerU.png" alt="MinerU">
+                                </div>
+                                <a href="https://github.com/opendatalab/MinerU" class="tool-link" data-zh="MinerU开源文档解析" data-en="MinerU Open Source Document Parsing">MinerU开源文档解析</a>
+                                <div class="tool-description" data-zh="开源文档解析工具，专注于将复杂的PDF、Word、PPT等文档高效、精准地转换为Markdown或JSON格式。<br><strong>应用场景：</strong>大模型语料生产、学术研究、数据分析预处理" data-en="Open-source document parsing tool focused on efficiently and accurately converting complex PDF, Word, PPT documents into Markdown or JSON formats.<br><strong>Use Cases:</strong> Large model corpus production, academic research, data analysis preprocessing">
+                                    开源文档解析工具，专注于将复杂的PDF、Word、PPT等文档高效、精准地转换为Markdown或JSON格式。
+                                    <br><strong>应用场景：</strong>大模型语料生产、学术研究、数据分析预处理
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <div class="subsection-title" data-zh="网页抓取：从互联网获取动态数据" data-en="Web Scraping: Acquiring Dynamic Data from the Internet">网页抓取：从互联网获取动态数据</div>
+                        <div class="subsection-description" data-zh="网页抓取工具用于从互联网上自动收集信息，对于构建需要实时或广泛网络数据的大模型应用至关重要，例如获取新闻、论坛讨论、产品信息等。" data-en="Web scraping tools are used to automatically collect information from the internet, which is crucial for building large model applications that require real-time or extensive network data, such as obtaining news, forum discussions, product information, etc.">
+                            网页抓取工具用于从互联网上自动收集信息，对于构建需要实时或广泛网络数据的大模型应用至关重要，例如获取新闻、论坛讨论、产品信息等。
+                        </div>
+                        <div class="tools-grid">
+                            <div class="tool-card icon-firecrawl">
+                                <div class="tool-icon">
+                                    <img src="./img/firecrawl.png" alt="Firecrawl">
+                                </div>
+                                <a href="https://github.com/mendableai/firecrawl" class="tool-link" data-zh="Firecrawl智能网页抓取" data-en="Firecrawl Intelligent Web Scraping">Firecrawl智能网页抓取</a>
+                                <div class="tool-description" data-zh="开源的AI原生网络爬虫工具，能够抓取网站的所有可访问子页面，将抓取的网页内容直接转换为对LLM友好的Markdown格式。<br><strong>应用场景：</strong>RAG知识库构建、市场调研与竞品分析、个性化内容生成" data-en="Open-source AI-native web crawler tool that can scrape all accessible sub-pages of a website and directly convert the scraped web content into LLM-friendly Markdown format.<br><strong>Use Cases:</strong> RAG knowledge base, market research and competitive analysis, personalized content generation">
+                                    开源的AI原生网络爬虫工具，能够抓取网站的所有可访问子页面，将抓取的网页内容直接转换为对LLM友好的Markdown格式。
+                                    <br><strong>应用场景：</strong>RAG知识库构建、市场调研与竞品分析、个性化内容生成
+                                </div>
+                            </div>
+                            <div class="tool-card icon-scrapy">
+                                <div class="tool-icon">
+                                    <img src="./img/scrapy.png" alt="Scrapy">
+                                </div>
+                                <a href="https://github.com/scrapy/scrapy" class="tool-link" data-zh="Scrapy Python爬虫框架" data-en="Scrapy Python Crawler Framework">Scrapy Python爬虫框架</a>
+                                <div class="tool-description" data-zh="用Python编写的快速、高级的开源网络爬虫框架，提供一整套工具和API，支持异步处理，能够应对大规模数据抓取任务。<br><strong>应用场景：</strong>大规模数据采集、搜索引擎数据索引、舆情监控系统" data-en="Fast, high-level open-source web crawling framework written in Python, providing a complete set of tools and APIs, supporting asynchronous processing, capable of handling large-scale data scraping tasks.<br><strong>Use Cases:</strong> Large-scale data collection, search engine data indexing, public opinion monitoring systems">
+                                    用Python编写的快速、高级的开源网络爬虫框架，提供一整套工具和API，支持异步处理，能够应对大规模数据抓取任务。
+                                    <br><strong>应用场景：</strong>大规模数据采集、搜索引擎数据索引、舆情监控系统
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 向量化与重排 -->
+                <div class="tech-section">
+                    <div class="section-title" data-zh="向量化与重排：提升模型理解与检索效率" data-en="Vectorization & Reranking: Enhancing Model Understanding and Retrieval Efficiency">向量化与重排：提升模型理解与检索效率</div>
+                    <div class="section-description" data-zh="向量化与重排是构建RAG系统和语义搜索应用的核心组件。向量化是将文本等数据转换为稠密向量表示的过程，使得计算机能够理解其语义信息。重排则是在初步检索后，对结果进行更精细的排序，以提高最终答案的质量。" data-en="Vectorization and reranking are core components for building RAG systems and semantic search applications. Vectorization is the process of converting text and other data into dense vector representations, enabling computers to understand semantic information. Reranking involves more refined sorting of results after initial retrieval to improve the quality of final answers.">
+                        向量化与重排是构建RAG系统和语义搜索应用的核心组件。向量化是将文本等数据转换为稠密向量表示的过程，使得计算机能够理解其语义信息。重排则是在初步检索后，对结果进行更精细的排序，以提高最终答案的质量。
+                    </div>
+                    <div class="tools-grid">
+                        <div class="tool-card icon-qwen-embedding">
+                            <div class="tool-icon">
+                                <img src="./img/qwen3embedding.png" alt="QwenEmbedding">
+                            </div>
+                            <a href="https://github.com/QwenLM/Qwen3-Embedding" class="tool-link" data-zh="QwenEmbedding千问向量模型" data-en="QwenEmbedding Vector Model">QwenEmbedding千问向量模型</a>
+                            <div class="tool-description" data-zh="基于Qwen3基础模型训练的文本嵌入模型系列，专为文本表征、语义检索与排序任务设计，充分继承了Qwen3在多语言文本理解方面的优势。<br><strong>应用场景：</strong>语义搜索、RAG应用、文本聚类与分类、推荐系统" data-en="Text embedding model series trained on Qwen3 foundation model, specifically designed for text representation, semantic retrieval and ranking tasks, fully inheriting Qwen3's advantages in multilingual text understanding.<br><strong>Use Cases:</strong> Semantic search, RAG applications, text clustering and classification, recommendation systems">
+                                基于Qwen3基础模型训练的文本嵌入模型系列，专为文本表征、语义检索与排序任务设计，充分继承了Qwen3在多语言文本理解方面的优势。
+                                <br><strong>应用场景：</strong>语义搜索、RAG应用、文本聚类与分类、推荐系统
+                            </div>
+                        </div>
+                        <div class="tool-card icon-jina-ai">
+                            <div class="tool-icon">
+                                <img src="./img/jina_ai.png" alt="JinaAI">
+                            </div>
+                            <a href="https://jina.ai/" class="tool-link" data-zh="JinaAI多模态向量服务" data-en="JinaAI Multimodal Vector Service">JinaAI多模态向量服务</a>
+                            <div class="tool-description" data-zh="专注于神经搜索技术，提供开源的神经搜索框架和高性能的语义向量模型，支持多语言和长文本处理。<br><strong>应用场景：</strong>企业级神经搜索、长文本理解与检索、多语言信息检索、轻量级应用嵌入" data-en="Focused on neural search technology, providing open-source neural search frameworks and high-performance semantic vector models, supporting multilingual and long-text processing.<br><strong>Use Cases:</strong> Enterprise-level neural search, long-text understanding and retrieval, multilingual information retrieval, lightweight application embedding">
+                                专注于神经搜索技术，提供开源的神经搜索框架和高性能的语义向量模型，支持多语言和长文本处理。
+                                <br><strong>应用场景：</strong>企业级神经搜索、长文本理解与检索、多语言信息检索、轻量级应用嵌入
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 开发框架 -->
+                <div class="tech-section">
+                    <div class="section-title" data-zh="开发框架：加速大模型应用构建" data-en="Development Frameworks: Accelerating AI Application Development">开发框架：加速大模型应用构建</div>
+                    <div class="section-description" data-zh="AI开发框架提供了一系列工具、库和抽象，旨在简化基于大语言模型的应用程序的开发过程。它们帮助开发者管理Prompt、链接不同组件、与外部数据源交互、实现记忆功能等，从而能够更快速地构建出功能强大的AI应用。" data-en="AI development frameworks provide a series of tools, libraries, and abstractions designed to simplify the development process of applications based on large language models. They help developers manage prompts, connect different components, interact with external data sources, implement memory functions, and thus build powerful AI applications more quickly.">
+                        AI开发框架提供了一系列工具、库和抽象，旨在简化基于大语言模型的应用程序的开发过程。它们帮助开发者管理Prompt、链接不同组件、与外部数据源交互、实现记忆功能等，从而能够更快速地构建出功能强大的AI应用。
+                    </div>
+                    
+                    <div class="subsection">
+                        <div class="subsection-title" data-zh="主流AI开发框架" data-en="Mainstream AI Development Frameworks">主流AI开发框架</div>
+                        <div class="tools-grid">
+                            <div class="tool-card icon-langchain">
+                                <div class="tool-icon">
+                                    <img src="./img/langchain.png" alt="LangChain">
+                                </div>
+                                <a href="https://www.langchain.com/" class="tool-link" data-zh="LangChain系列AI应用框架" data-en="LangChain AI Application Framework Series">LangChain系列AI应用框架</a>
+                                <div class="tool-description" data-zh="开源框架，专为构建基于语言模型的应用程序而设计。包含LangGraph、LangSmith等扩展工具，为AI应用开发提供从构建到落地的完整支持。<br><strong>应用场景：</strong>聊天机器人与个人助手、问答系统、代码分析与生成、数据增强型应用" data-en="Open-source framework specifically designed for building language model-based applications. Includes extended tools like LangGraph and LangSmith, providing complete support for AI application development from construction to deployment.<br><strong>Use Cases:</strong> Chatbots and personal assistants, Q&A systems, code analysis and generation, data-augmented applications">
+                                    开源框架，专为构建基于语言模型的应用程序而设计。包含LangGraph、LangSmith等扩展工具，为AI应用开发提供从构建到落地的完整支持。
+                                    <br><strong>应用场景：</strong>聊天机器人与个人助手、问答系统、代码分析与生成、数据增强型应用
+                                </div>
+                            </div>
+                            <div class="tool-card icon-qwen-agent">
+                                <div class="tool-icon">
+                                    <img src="./img/qwen-agent.png" alt="Qwen-Agent">
+                                </div>
+                                <a href="https://github.com/QwenLM/Qwen-Agent" class="tool-link" data-zh="Qwen-Agent千问智能体框架" data-en="Qwen-Agent Intelligent Agent Framework">Qwen-Agent千问智能体框架</a>
+                                <div class="tool-description" data-zh="基于阿里云通义千问系列大模型的智能体开发框架，支持函数调用、代码解释器和RAG等功能。<br><strong>应用场景：</strong>自动化任务执行、智能客服与支持、交互式数据分析" data-en="Intelligent agent development framework based on Alibaba Cloud's Tongyi Qwen series large models, supporting function calling, code interpreter, and RAG capabilities.<br><strong>Use Cases:</strong> Automated task execution, intelligent customer service and support, interactive data analysis">
+                                    基于阿里云通义千问系列大模型的智能体开发框架，支持函数调用、代码解释器和RAG等功能。
+                                    <br><strong>应用场景：</strong>自动化任务执行、智能客服与支持、交互式数据分析
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="subsection">
+                        <div class="subsection-title" data-zh="模型微调工具" data-en="Model Fine-tuning Tools">模型微调工具</div>
+                        <div class="tools-grid">
+                            <div class="tool-card icon-unsloth">
+                                <div class="tool-icon">
+                                    <img src="./img/unsloth.png" alt="Unsloth">
+                                </div>
+                                <a href="https://github.com/unslothai/unsloth" class="tool-link" data-zh="Unsloth高效模型微调" data-en="Unsloth Efficient Model Fine-tuning">Unsloth高效模型微调</a>
+                                <div class="tool-description" data-zh="开源的大语言模型微调工具，通过优化的计算步骤和自定义GPU内核，显著提升模型训练速度并大幅减少内存占用。<br><strong>应用场景：</strong>资源受限环境下的高效微调、中小模型适配、教学与实验" data-en="Open-source large language model fine-tuning tool that significantly improves model training speed and greatly reduces memory usage through optimized computational steps and custom GPU kernels.<br><strong>Use Cases:</strong> Efficient fine-tuning in resource-constrained environments, small and medium model adaptation, teaching and experimentation">
+                                    开源的大语言模型微调工具，通过优化的计算步骤和自定义GPU内核，显著提升模型训练速度并大幅减少内存占用。
+                                    <br><strong>应用场景：</strong>资源受限环境下的高效微调、中小模型适配、教学与实验
+                                </div>
+                            </div>
+                            <div class="tool-card icon-llama-factory">
+                                <div class="tool-icon">
+                                    <img src="./img/LLama-factory.png" alt="LLaMA-Factory">
+                                </div>
+                                <div class="tool-name" data-zh="LLaMA-Factory" data-en="LLaMA-Factory">LLaMA-Factory</div>
+                                <a href="https://github.com/hiyouga/LLaMA-Factory" class="tool-link" data-zh="LLaMA-Factory模型训练工厂" data-en="LLaMA-Factory Model Training Factory">LLaMA-Factory模型训练工厂</a>
+                                <div class="tool-description" data-zh="易于使用且高效的开源大型语言模型微调框架，支持多种预训练模型和微调算法，提供Web UI界面。<br><strong>应用场景：</strong>定制化行业模型、多模型实验与评估、低代码/无代码模型训练" data-en="Easy-to-use and efficient open-source large language model fine-tuning framework that supports multiple pre-trained models and fine-tuning algorithms, providing a Web UI interface.<br><strong>Use Cases:</strong> Customized industry models, multi-model experimentation and evaluation, low-code/no-code model training">
+                                    易于使用且高效的开源大型语言模型微调框架，支持多种预训练模型和微调算法，提供Web UI界面。
+                                    <br><strong>应用场景：</strong>定制化行业模型、多模型实验与评估、低代码/无代码模型训练
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 智能体与工作流 -->
+                <div class="tech-section">
+                    <div class="section-title" data-zh="智能体与工作流平台：低代码构建AI应用" data-en="Agent and Workflow Platforms: Low-Code AI Application Development">智能体与工作流平台：低代码构建AI应用</div>
+                    <div class="section-description" data-zh="智能体和工作流平台旨在通过低代码或无代码的方式，让开发者甚至非技术人员也能快速构建、编排和部署AI应用。它们通常提供可视化的界面，将复杂的AI逻辑分解为可配置的节点和流程。" data-en="Agent and workflow platforms aim to enable developers and even non-technical personnel to quickly build, orchestrate, and deploy AI applications through low-code or no-code approaches. They typically provide visual interfaces that break down complex AI logic into configurable nodes and processes.">
+                        智能体和工作流平台旨在通过低代码或无代码的方式，让开发者甚至非技术人员也能快速构建、编排和部署AI应用。它们通常提供可视化的界面，将复杂的AI逻辑分解为可配置的节点和流程。
+                    </div>
+                    <div class="tools-grid">
+                        <div class="tool-card icon-coze">
+                            <div class="tool-icon">
+                                <img src="./img/coze.jpg" alt="Coze">
+                            </div>
+                            <a href="https://www.coze.cn/" class="tool-link" data-zh="扣子(Coze)工作流" data-en="Coze Workflow">扣子(Coze)工作流</a>
+                            <div class="tool-description" data-zh="新一代的AI Bot智能体开发平台，允许用户通过简单的拖拽和配置，快速搭建具有聊天、问答、工具调用、工作流执行等能力的AI智能体。<br><strong>应用场景：</strong>快速创建多功能聊天机器人、自动化业务流程、教育与娱乐应用" data-en="Next-generation AI Bot agent development platform that allows users to quickly build AI agents with chat, Q&A, tool calling, and workflow execution capabilities through simple drag-and-drop configuration.<br><strong>Use Cases:</strong> Rapid creation of multifunctional chatbots, automated business processes, education and entertainment applications">
+                                新一代的AI Bot智能体开发平台，允许用户通过简单的拖拽和配置，快速搭建具有聊天、问答、工具调用、工作流执行等能力的AI智能体。
+                                <br><strong>应用场景：</strong>快速创建多功能聊天机器人、自动化业务流程、教育与娱乐应用
+                            </div>
+                        </div>
+                        <div class="tool-card icon-dify">
+                            <div class="tool-icon">
+                                <img src="./img/dify.png" alt="Dify">
+                            </div>
+                            <a href="https://github.com/langgenius/dify" class="tool-link" data-zh="Dify工作流" data-en="Dify Workflow">Dify工作流</a>
+                            <div class="tool-description" data-zh="开源的LLMOps平台，旨在简化AI应用的开发、部署和管理。提供Prompt工程、可视化应用编排、数据集管理、模型集成、API发布等完整工具集。<br><strong>应用场景：</strong>AI应用原型快速验证、企业内部AI能力建设、Prompt工程与优化" data-en="Open-source LLMOps platform designed to simplify AI application development, deployment, and management. Provides complete toolset including prompt engineering, visual application orchestration, dataset management, model integration, and API publishing.<br><strong>Use Cases:</strong> Rapid AI application prototype validation, enterprise internal AI capability building, prompt engineering and optimization">
+                                开源的LLMOps平台，旨在简化AI应用的开发、部署和管理。提供Prompt工程、可视化应用编排、数据集管理、模型集成、API发布等完整工具集。
+                                <br><strong>应用场景：</strong>AI应用原型快速验证、企业内部AI能力建设、Prompt工程与优化
+                            </div>
+                        </div>
+                        <div class="tool-card icon-zhipu">
+                            <div class="tool-icon">
+                                <img src="./img/zhipuai.png" alt="智谱AI">
+                            </div>
+                            <a href="https://bigmodel.cn/agent" class="tool-link" data-zh="智谱清流" data-en="Zhipu Qingliu">智谱清流</a>
+                            <div class="tool-description" data-zh="智谱AI推出的企业级AI智能体开发和管理平台，基于GLM系列大模型，通过配置知识库、工具、工作流等方式创建和部署智能体。<br><strong>应用场景：</strong>企业级智能客服、业务流程自动化、内部知识管理与检索" data-en="Enterprise-level AI agent development and management platform launched by Zhipu AI, based on GLM series large models, creating and deploying agents through configuring knowledge bases, tools, and workflows.<br><strong>Use Cases:</strong> Enterprise-level intelligent customer service, business process automation, internal knowledge management and retrieval">
+                                智谱AI推出的企业级AI智能体开发和管理平台，基于GLM系列大模型，通过配置知识库、工具、工作流等方式创建和部署智能体。
+                                <br><strong>应用场景：</strong>企业级智能客服、业务流程自动化、内部知识管理与检索
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 资源服务平台 -->
+                <div class="tech-section">
+                    <div class="section-title" data-zh="模型服务资源平台" data-en="Model Service Resource Platforms">模型服务资源平台</div>
+                    <div class="section-description" data-zh="资源服务平台通常指云服务提供商提供的AI平台或模型即服务（MaaS）平台。它们为开发者提供了从模型选择、训练、微调到部署、推理和应用托管的一站式服务，降低了AI应用落地的基础设施门槛和运维复杂度。" data-en="Resource service platforms typically refer to AI platforms or Model-as-a-Service (MaaS) platforms provided by cloud service providers. They offer developers one-stop services from model selection, training, fine-tuning to deployment, inference, and application hosting, reducing infrastructure barriers and operational complexity for AI application deployment.">
+                        资源服务平台通常指云服务提供商提供的AI平台或模型即服务（MaaS）平台。它们为开发者提供了从模型选择、训练、微调到部署、推理和应用托管的一站式服务，降低了AI应用落地的基础设施门槛和运维复杂度。
+                    </div>
+                    <div class="tools-grid">
+                        <div class="tool-card icon-bailian">
+                            <div class="tool-icon">
+                                <img src="./img/bailian.png" alt="百炼">
+                            </div>
+                            <a href="https://bailian.console.aliyun.com/" class="tool-link" data-zh="阿里云百炼" data-en="Alibaba Cloud Bailian">阿里云百炼</a>
+                            <div class="tool-description" data-zh="一站式的大模型开发和应用平台，集成多种高质量的预训练模型，提供模型定制、应用编排、Prompt工程、模型部署等全链路能力。<br><strong>应用场景：</strong>企业级AI解决方案构建、零代码/低代码RAG应用创建、模型即服务(MaaS)" data-en="One-stop large model development and application platform that integrates multiple high-quality pre-trained models, providing full-chain capabilities including model customization, application orchestration, prompt engineering, and model deployment.<br><strong>Use Cases:</strong> Enterprise AI solution, zero-code/low-code RAG application creation, Model-as-a-Service (MaaS)">
+                                一站式的大模型开发和应用平台，集成多种高质量的预训练模型，提供模型定制、应用编排、Prompt工程、模型部署等全链路能力。
+                                <br><strong>应用场景：</strong>企业级AI解决方案构建、零代码/低代码RAG应用创建、模型即服务(MaaS)
+                            </div>
+                        </div>
+                        <div class="tool-card icon-siliconflow">
+                            <div class="tool-icon">
+                                <img src="./img/siliconflow.png" alt="硅基流动">
+                            </div>
+                            <a href="https://siliconflow.cn/" class="tool-link" data-zh="硅基流动模型服务" data-en="SiliconFlow Model Service">硅基流动模型服务</a>
+                            <div class="tool-description" data-zh="专注于生成式人工智能领域的计算基础设施和模型服务平台，提供包括IaaS、PaaS和MaaS在内的一站式大模型云服务。<br><strong>应用场景：</strong>高效费比模型推理服务、多模态AI应用开发、AI基础设施优化" data-en="Computing infrastructure and model service platform focused on generative artificial intelligence, providing one-stop large model cloud services including IaaS, PaaS, and MaaS.<br><strong>Use Cases:</strong> Cost-effective model inference services, multimodal AI application development, AI infrastructure optimization">
+                                专注于生成式人工智能领域的计算基础设施和模型服务平台，提供包括IaaS、PaaS和MaaS在内的一站式大模型云服务。
+                                <br><strong>应用场景：</strong>高效费比模型推理服务、多模态AI应用开发、AI基础设施优化
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- 大模型 -->
+                <div class="tech-section">
+                    <div class="section-title" data-zh="大模型：驱动应用的核心引擎" data-en="Large Models: Core Engines Driving Applications">大模型：驱动应用的核心引擎</div>
+                    <div class="section-description" data-zh="大模型是当前AI浪潮的核心驱动力，它们是经过海量数据预训练的深度学习模型，具备强大的自然语言理解、生成、推理以及多模态处理能力。选择合适的大模型是开发AI应用的基础。" data-en="Large models are the core driving force of the current AI wave. They are deep learning models pre-trained on massive datasets, possessing powerful capabilities in natural language understanding, generation, reasoning, and multimodal processing. Choosing the right large model is fundamental to developing AI applications.">
+                        大模型是当前AI浪潮的核心驱动力，它们是经过海量数据预训练的深度学习模型，具备强大的自然语言理解、生成、推理以及多模态处理能力。选择合适的大模型是开发AI应用的基础。
+                    </div>
+                    <div class="tools-grid">
+                        <div class="tool-card icon-deepseek">
+                            <div class="tool-icon">
+                                <img src="./img/deepseek.png" alt="DeepSeek">
+                            </div>
+                            <a href="https://www.deepseek.com/" class="tool-link" data-zh="DeepSeek" data-en="DeepSeek">DeepSeek</a>
+                            <div class="tool-description" data-zh="由幻方量化旗下人工智能公司开发的一系列大型语言模型，常年处于开源大模型排行榜冠军位置。<br><strong>应用场景：</strong>编程辅助与代码生成、通用自然语言处理任务、专业领域应用、教育与研究" data-en="A series of large language models developed by the AI company under High-Flyer Quantitative Investment, consistently ranking at the top of open-source large model leaderboards.<br><strong>Use Cases:</strong> Programming assistance and code generation, general natural language processing tasks, specialized domain applications, education and research">
+                                由幻方量化旗下人工智能公司开发的一系列大型语言模型，常年处于开源大模型排行榜冠军位置。
+                                <br><strong>应用场景：</strong>编程辅助与代码生成、通用自然语言处理任务、专业领域应用、教育与研究
+                            </div>
+                        </div>
+                        <div class="tool-card icon-qwen">
+                            <div class="tool-icon">
+                                <img src="./img/qwen.png" alt="千问">
+                            </div>
+                            <a href="https://github.com/QwenLM" class="tool-link" data-zh="千问系列大模型家族" data-en="Qwen Large Model Family">千问系列大模型家族</a>
+                            <div class="tool-description" data-zh="阿里云自主研发的一系列大型语言模型和多模态模型，支持强大的自然语言理解与生成、代码生成、数学推理、多语言处理以及多模态输入输出。<br><strong>应用场景：</strong>内容创作、智能对话与客服、代码助手、多模态应用、RAG与语义检索" data-en="A series of large language models and multimodal models independently developed by Alibaba Cloud, supporting powerful natural language understanding and generation, code generation, mathematical reasoning, multilingual processing, and multimodal input/output.<br><strong>Use Cases:</strong> Content creation, intelligent dialogue and customer service, code assistance, multimodal applications, RAG and semantic search">
+                                阿里云自主研发的一系列大型语言模型和多模态模型，支持强大的自然语言理解与生成、代码生成、数学推理、多语言处理以及多模态输入输出。
+                                <br><strong>应用场景：</strong>内容创作、智能对话与客服、代码助手、多模态应用、RAG与语义检索
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 结语 -->
+                <div class="tech-section">
+                    <div class="section-title" data-zh="持续探索与学习" data-en="Continuous Exploration and Learning">持续探索与学习</div>
+                    <div class="section-description">
+                        <p data-zh="本页面所推荐的工具和平台仅代表各个技术领域中的一小部分优秀选择。AI技术生态系统正在快速发展，每天都有新的工具、框架和服务涌现。" data-en="The tools and platforms recommended on this page represent only a small selection of excellent choices in various technical fields. The AI technology ecosystem is rapidly evolving, with new tools, frameworks, and services emerging every day.">本页面所推荐的工具和平台仅代表各个技术领域中的一小部分优秀选择。AI技术生态系统正在快速发展，每天都有新的工具、框架和服务涌现。</p>
+                        <p data-zh="我们鼓励您：" data-en="We encourage you to:">我们鼓励您：</p>
+                        <ul style="margin: 10px 0; padding-left: 20px;">
+                            <li data-zh="积极探索和尝试更多的开源项目和商业服务" data-en="Actively explore and try more open-source projects and commercial services">积极探索和尝试更多的开源项目和商业服务</li>
+                            <li data-zh="关注AI技术社区的最新动态和趋势" data-en="Follow the latest developments and trends in AI technology communities">关注AI技术社区的最新动态和趋势</li>
+                            <li data-zh="参与开源项目的贡献和讨论" data-en="Participate in open-source project contributions and discussions">参与开源项目的贡献和讨论</li>
+                            <li data-zh="根据具体项目需求选择最适合的技术栈组合" data-en="Choose the most suitable technology stack combination based on specific project requirements">根据具体项目需求选择最适合的技术栈组合</li>
+                        </ul>
+                        <p data-zh="保持学习的热情和开放的心态，是在快速变化的AI领域中保持竞争力的关键。" data-en="Maintaining enthusiasm for learning and an open mindset is key to staying competitive in the rapidly changing AI field.">保持学习的热情和开放的心态，是在快速变化的AI领域中保持竞争力的关键。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 语言切换功能
+        let currentLanguage = 'zh';
+        
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
+            updateContent();
+            updateToggleButton();
+        }
+        
+        function updateContent() {
+            const elements = document.querySelectorAll('[data-zh][data-en]');
+            elements.forEach(element => {
+                if (currentLanguage === 'zh') {
+                    element.innerHTML = element.getAttribute('data-zh');
+                } else {
+                    element.innerHTML = element.getAttribute('data-en');
+                }
+            });
+        }
+        
+        function updateToggleButton() {
+            const button = document.querySelector('.language-toggle');
+            if (currentLanguage === 'zh') {
+                button.textContent = 'EN';
+                button.title = 'Switch to English';
+            } else {
+                button.textContent = '中文';
+                button.title = 'Switch to Chinese';
+            }
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            updateToggleButton();
+        });
+    </script>
+</body>
+</html>
